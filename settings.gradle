@@ -1,0 +1,6 @@
+rootProject.name = 'ms-project'
+include 'ms-authentication'
+include 'ms-user'
+include 'ms-announcement'
+include 'ms-common'
+

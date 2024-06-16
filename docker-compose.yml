@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  custom-mysql:
+    hostname: postgres
+    image: postgres
+    container_name: ms-project
+    restart: always
+    ports:
+      - '5439:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=ms_db
+    networks:
+      - my_network
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  custom-redis:
+    image: redis
+    container_name: redis-cache
+    networks:
+      - my_network
+    ports:
+      - '6371:6379'
+    volumes:
+      - db:/data
+
+volumes:
+  db:
+
+networks:
+  my_network:
