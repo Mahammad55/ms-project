@@ -1,4 +1,5 @@
 dependencies {
     implementation project(":ms-authentication")
     implementation project(":ms-user")
+    implementation project(":ms-common")
 }

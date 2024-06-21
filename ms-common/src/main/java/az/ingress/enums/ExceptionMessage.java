@@ -12,7 +12,9 @@ public enum ExceptionMessage {
 
     USER_NOT_FOUND("User by parameter=%s not found"),
 
-    USER_ALREADY_EXIST("User by parameter=%s is already exist");
+    USER_ALREADY_EXIST("User by parameter=%s is already exist"),
+
+    PASSWORDS_ARE_NOT_EQUAL("%s and %s are not equals passwords");
 
     private final String message;
 }

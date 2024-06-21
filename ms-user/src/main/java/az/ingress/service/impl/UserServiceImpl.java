@@ -22,6 +22,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+import static az.ingress.enums.ExceptionMessage.PASSWORDS_ARE_NOT_EQUAL;
+import static az.ingress.enums.ExceptionMessage.USER_ALREADY_EXIST;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -41,11 +44,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(RegisterRequest registerRequest) {
         userRepository.findUserByUsername(registerRequest.getEmail()).ifPresent(user -> {
-            throw new AlreadyExistException("User already exist : " + registerRequest.getEmail());
+            throw new AlreadyExistException(USER_ALREADY_EXIST.getMessage().formatted(registerRequest.getEmail()));
         });
 
         if (!registerRequest.getPassword().equals(registerRequest.getRepeatPassword())) {
-            throw new PasswordIncorrectException("%s and %s are not equals passwords".formatted(registerRequest.getPassword(), registerRequest.getRepeatPassword()));
+            throw new PasswordIncorrectException(PASSWORDS_ARE_NOT_EQUAL.getMessage().formatted(registerRequest.getPassword(), registerRequest.getRepeatPassword()));
         }
 
         User user = userMapper.requestToEntity(registerRequest);

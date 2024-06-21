@@ -10,9 +10,9 @@ import lombok.Setter;
 public class ErrorResponse {
     private String timestamp;
 
-    private String message;
-
     private Integer status;
+
+    private String message;
 
     private String path;
 }
