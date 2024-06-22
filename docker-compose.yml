@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  custom-mysql:
+  custom-postgres:
     hostname: postgres
     image: postgres
     container_name: ms-project
@@ -15,7 +15,7 @@ services:
     networks:
       - my_network
     volumes:
-      - db:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
 
   custom-redis:
     image: redis
@@ -25,10 +25,11 @@ services:
     ports:
       - '6371:6379'
     volumes:
-      - db:/data
+      - redis_data:/data
 
 volumes:
-  db:
+  redis_data:
+  postgres_data:
 
 networks:
   my_network:
