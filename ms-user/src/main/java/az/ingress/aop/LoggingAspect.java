@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
 @Aspect
 @Slf4j
 public class LoggingAspect {
-    @Around("execution(* az.ingress.service.impl.UserServiceImpl.*(..))")
+    @Around("@annotation(az.ingress.annotation.ConsoleLog)")
     public Object elapsedTimeLogger(ProceedingJoinPoint point) throws Throwable {
         long startTime = System.currentTimeMillis();
 

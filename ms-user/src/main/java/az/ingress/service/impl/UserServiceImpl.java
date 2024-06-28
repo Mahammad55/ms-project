@@ -1,5 +1,6 @@
 package az.ingress.service.impl;
 
+import az.ingress.annotation.ConsoleLog;
 import az.ingress.config.JwtService;
 import az.ingress.model.dto.request.LoginRequest;
 import az.ingress.model.dto.request.RegisterRequest;
@@ -41,6 +42,7 @@ public class UserServiceImpl implements UserService {
 
     private final JwtService jwtService;
 
+    @ConsoleLog
     @Override
     public void register(RegisterRequest registerRequest) {
         userRepository.findUserByUsername(registerRequest.getEmail()).ifPresent(user -> {
@@ -57,6 +59,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @ConsoleLog
     @Override
     public JwtResponse login(LoginRequest loginRequest) {
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
