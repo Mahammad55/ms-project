@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - includeAll:
+      path: announcementdb/changelog/v1.0

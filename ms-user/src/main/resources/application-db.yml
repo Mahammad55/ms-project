@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://${DB_CONNECTION_IP:localhost}:${DB_CONNECTION_PORT:5439}/${DB_CONNECTION_DATABASE:ms_user_db}?currentSchema=${DB_CONNECTION_SCHEMA:public}
+    url: jdbc:postgresql://${DB_CONNECTION_IP:localhost}:${DB_CONNECTION_PORT:5439}/${DB_CONNECTION_DATABASE:ms_user_db}?currentSchema=${DB_CONNECTION_SCHEMA:ms_user_schema}
     username: ${DB_CONNECTION_USERNAME:postgres}
     password: ${DB_CONNECTION_PASSWORD:password}
     driver-class-name: org.postgresql.Driver
@@ -14,6 +14,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        default_schema: ${DB_CONNECTION_SCHEMA:public}
+        default_schema: ${DB_CONNECTION_SCHEMA:ms_user_schema}
         temp:
           use_jdbc_metadata_defaults: false

@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - includeAll:
+      path: userdb/changelog/v1.0

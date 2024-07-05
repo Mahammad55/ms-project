@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2024-07-06-02-01
+      author: mahammad
+      changes:
+        - createTable:
+            tableName: announcements
+            remarks: Table to store information about announcements
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_announcements_to_id
+              - column:
+                  name: view_count
+                  type: INT
+              - column:
+                  name: announcement_detail_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_announcements_to_announcement_details
+                    references: announcement_details(id)
+                    onDelete: CASCADE
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_announcements_to_users
+                    references: ms_user_db.ms_user_schema.users(id)
+                    onDelete: CASCADE

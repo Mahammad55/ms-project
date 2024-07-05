@@ -1,0 +1,7 @@
+spring:
+  liquibase:
+    enabled: true
+    change-log: classpath:userdb/changelog/changelog-master.yml
+    default-schema: ms_user_schema
+    database-change-log-table: database_changelog
+    database-change-log-lock-table: database_changelog_lock

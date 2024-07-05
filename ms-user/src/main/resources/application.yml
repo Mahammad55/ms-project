@@ -4,3 +4,4 @@ spring:
       - common
       - db
       - security
+      - changelog
