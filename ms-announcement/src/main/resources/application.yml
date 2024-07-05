@@ -2,5 +2,6 @@ spring:
   profiles:
     include:
       - common
-      - db
+      - redis
       - security
+      - db
