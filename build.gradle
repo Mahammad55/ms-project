@@ -1,8 +1,18 @@
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.4'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'com.bmuschko.docker-remote-api' version "${dockerVersion}" apply false
 }
+
+def javaProjects = [
+        project(':ms-user'),
+        project(':ms-announcement')
+]
 
 allprojects {
     group = 'az.ingress'
@@ -36,4 +46,36 @@ allprojects {
 
 subprojects {
 
+}
+
+configure(javaProjects) {
+    task dockerFile(dependsOn: ['assemble'], type: Dockerfile) {
+        doLast {
+            println "Docker file creating"
+        }
+        destFile.set(project.file('Dockerfile'))
+        from "openjdk:17"
+        copyFile "build/libs/${project.name}-${project.version}.jar", "/app/"
+        workingDir "/app/"
+        entryPoint "java"
+        defaultCommand "-jar", "/app/${project.name}-${project.version}.jar"
+    }
+
+    task dockerBuild(dependsOn: dockerFile, type: Exec) {
+        doLast {
+            println("Creating image ${dockerRepoUrl}/${project.name}: ${projectVersion}")
+        }
+        commandLine "docker", "build", ".", "-t", "${dockerRepoUrl}/${project.name}:${projectVersion}"
+    }
+
+    task dockerPush(dependsOn: dockerBuild, type: DockerPushImage) {
+        doLast {
+            println("Pushing image $dockerRepoUrl/${project.name}: ${projectVersion}")
+        }
+        commandLine "docker", "push", "${dockerRepoUrl}/${project.name}:$projectVersion"
+        images.add("$dockerRepoUrl/${project.name}:${projectVersion}")
+        registryCredentials.setUsername("${dockerHubUsername}")
+        registryCredentials.setPassword("${dockerHubPassword}")
+        registryCredentials.setEmail("${dockerHubEmail}")
+    }
 }

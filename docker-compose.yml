@@ -27,6 +27,38 @@ services:
     volumes:
       - redis_data:/data
 
+  ms-user-app-service:
+    hostname: ms-user-app
+    image: ms-user-app
+    container_name: ms-user-app-container
+    networks:
+      - my_network
+    ports:
+      - '8082:8082'
+    depends_on:
+      - postgres-service
+    environment:
+      DB_CONNECTION_USERNAME: postgres
+      DB_CONNECTION_PASSWORD: password
+      DB_CONNECTION_PORT: '5432'
+      DB_CONNECTION_IP: postgres-service
+
+  ms-announcement-app-service:
+    hostname: ms-announcement-app
+    image: ms-announcement-app
+    container_name: ms-announcement-app-container
+    networks:
+      - my_network
+    ports:
+      - '8081:8081'
+    depends_on:
+      - postgres-service
+    environment:
+      DB_CONNECTION_USERNAME: postgres
+      DB_CONNECTION_PASSWORD: password
+      DB_CONNECTION_PORT: '5432'
+      DB_CONNECTION_IP: postgres-service
+
 volumes:
   redis_data: { }
   postgres_data: { }

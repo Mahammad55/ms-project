@@ -26,11 +26,11 @@ databaseChangeLog:
                     foreignKeyName: fk_announcements_to_announcement_details
                     references: announcement_details(id)
                     onDelete: CASCADE
-              - column:
-                  name: user_id
-                  type: BIGINT
-                  constraints:
-                    nullable: false
-                    foreignKeyName: fk_announcements_to_users
-                    references: ms_user_db.ms_user_schema.users(id)
-                    onDelete: CASCADE
+#              - column:
+#                  name: user_id
+#                  type: BIGINT
+#                  constraints:
+#                    nullable: false
+#                    foreignKeyName: fk_announcements_to_users
+#                    references: ms_user_db.ms_user_schema.users(id)
+#                    onDelete: CASCADE
