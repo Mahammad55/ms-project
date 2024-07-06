@@ -2,8 +2,7 @@ package az.ingress.dto.request;
 
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnnouncementRequest {

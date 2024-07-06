@@ -2,8 +2,6 @@ package az.ingress.aop;
 
 import az.ingress.model.dto.request.LoginRequest;
 import az.ingress.model.dto.request.RegisterRequest;
-import az.ingress.exception.AlreadyExistException;
-import az.ingress.exception.PasswordIncorrectException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -43,15 +41,9 @@ public class LoggingAspect {
         Object proceed;
         try {
             proceed = point.proceed();
-        } catch (AlreadyExistException exception) {
-            log.error("{}.{}.error -- user already exists:{}", className, methodName, email);
-            throw exception;
-        } catch (PasswordIncorrectException exception) {
-            log.error("{}.{}.error -- password mismatch for user:{}", className, methodName, email);
-            throw exception;
-        } catch (Exception exception) {
-            log.error("{}.{}.error -- an unexpected error occurred for user:{}", className, methodName, email, exception);
-            throw exception;
+        } catch (Throwable throwable) {
+            log.error("{}.{}.error -- {}", className, methodName, throwable.getMessage());
+            throw throwable;
         }
 
         long endTime = System.currentTimeMillis();
