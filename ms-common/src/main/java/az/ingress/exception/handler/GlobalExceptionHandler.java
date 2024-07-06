@@ -1,6 +1,10 @@
-package az.ingress.exception;
+package az.ingress.exception.handler;
 
 import az.ingress.dto.response.ErrorResponse;
+import az.ingress.exception.AlreadyExistException;
+import az.ingress.exception.NotFoundException;
+import az.ingress.exception.PasswordIncorrectException;
+import az.ingress.exception.VerificationException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +21,6 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
     @ExceptionHandler(AlreadyExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse alreadyExistExceptionHandler(AlreadyExistException exception, HttpServletRequest request) {
@@ -54,14 +57,25 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException exception, HttpServletRequest request) {
         Map<String, Object> exceptionResponse = new HashMap<>();
-        exceptionResponse.put("path", request.getRequestURI());
-        exceptionResponse.put("status", HttpStatus.BAD_REQUEST.value());
         exceptionResponse.put("timestamp", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MMMM-dd HH:mm:ss")));
+        exceptionResponse.put("status", HttpStatus.BAD_REQUEST.value());
+        exceptionResponse.put("path", request.getRequestURI());
 
         for (FieldError fieldError : exception.getBindingResult().getFieldErrors()) {
             exceptionResponse.put(fieldError.getField(), fieldError.getDefaultMessage());
         }
         return ResponseEntity.badRequest().body(exceptionResponse);
+    }
+
+    @ExceptionHandler(VerificationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponse verificationExceptionHandler(VerificationException exception, HttpServletRequest request) {
+        return ErrorResponse.builder()
+                .timestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MMMM-dd HH:mm:ss")))
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .message(exception.getMessage())
+                .path(request.getRequestURI())
+                .build();
     }
 
     @ExceptionHandler(Exception.class)

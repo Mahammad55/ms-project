@@ -8,7 +8,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/v1/users")
@@ -20,6 +24,18 @@ public class UserController {
     public ResponseEntity<Void> register(@RequestBody @Valid RegisterRequest registerRequest) {
         userService.register(registerRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/activate")
+    public ResponseEntity<Void> activate(@RequestParam String email, @RequestParam Integer verificationCode) {
+        userService.activate(email, verificationCode);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/resend-verification-code")
+    public ResponseEntity<Void> resendVerificationCode(@RequestParam("email") String email) {
+        userService.resendVerificationCode(email);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")

@@ -28,3 +28,38 @@ databaseChangeLog:
               - column:
                   name: password
                   type: VARCHAR(255)
+
+  - changeSet:
+      id: 2024-07-06-01-02
+      author: mahammad
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: verification_code
+                  type: INT
+
+  - changeSet:
+      id: 2024-07-06-01-03
+      author: mahammad
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: account_non_expired
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: account_non_locked
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: credentials_non_expired
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: enabled
+                  type: BOOLEAN
+                  defaultValueBoolean: false

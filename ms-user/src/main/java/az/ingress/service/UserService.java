@@ -8,4 +8,8 @@ public interface UserService {
     void register(RegisterRequest registerRequest);
 
     JwtResponse login(LoginRequest loginRequest);
+
+    void activate(String email, Integer verificationCode);
+
+    void resendVerificationCode(String email);
 }
