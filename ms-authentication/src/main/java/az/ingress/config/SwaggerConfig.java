@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
         contact = @Contact(
                 name = "Mahammad Ilyazov",
                 email = "ilyazovmehemmed@gmail.com",
-                url = "https://github.com/Mahammad55"
+                url = "https://github.com/Mahammad55/ms-project"
         )
 ))
 

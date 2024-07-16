@@ -6,6 +6,7 @@ import az.ingress.dto.request.SearchCriteria;
 import az.ingress.dto.response.AnnouncementResponse;
 import az.ingress.dto.response.PageAnnouncementResponse;
 import az.ingress.service.AnnouncementService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +23,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("api/v1/announcements")
+@Tag(name = "Announcement Controller", description = "This controller manage announcements")
 @RequiredArgsConstructor
 public class AnnouncementController {
     private final AnnouncementService announcementService;
@@ -65,7 +67,7 @@ public class AnnouncementController {
     }
 
     @GetMapping("/most/{username}")
-    public AnnouncementResponse getOwnMostViewedAnnouncement(@PathVariable String username,Principal principal) {
+    public AnnouncementResponse getOwnMostViewedAnnouncement(@PathVariable String username, Principal principal) {
         System.out.println(principal);
         return announcementService.getOwnMostViewedAnnouncement(username);
     }

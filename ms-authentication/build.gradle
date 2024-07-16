@@ -2,5 +2,4 @@ dependencies {
     implementation "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
     implementation "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
     implementation "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
-    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openApiVersion}"
 }
